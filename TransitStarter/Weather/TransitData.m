@@ -22,6 +22,8 @@
 
 -(void) initRoutesDataWith:(NSString*)searchRouteName
 {
+    //NSLog(@"Tried Street name: %@",searchRouteName);
+    
     self.searchRouteName = searchRouteName;
     self.routes = nil;
     self.routes = [[NSMutableArray alloc] initWithObjects: nil];

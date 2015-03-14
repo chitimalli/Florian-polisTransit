@@ -39,10 +39,9 @@
     self.searchBar.returnKeyType = UIReturnKeySearch;
     
     [self.navigationController setToolbarHidden:NO animated:YES];
-
 }
 
--(BOOL)prefersStatusBarHidden{return YES;}
+//-(BOOL)prefersStatusBarHidden{return YES;}
 
 - (void)didReceiveMemoryWarning
 {
@@ -153,76 +152,29 @@
                RouteModel* routeModel =  [[RouteModel alloc] initWithDictionary:[rows objectAtIndex:i] error:&err];
                 if(routeModel)
                 {
-                    //NSLog(@">> %@",routeModel);
+                    
                     [[[TransitData sharedInstance] routes] addObject:routeModel];
                 }
             }
+        }else
+        {
+            NSString *streetTried = [[TransitData sharedInstance] searchRouteName];
+            
+            //NSLog(@">> Err Street name: %@",streetTried);
+
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"No Routes found"
+                                                                message:[NSString stringWithFormat:@"No routes for Street:%@. Try a new Street name..",streetTried]
+                                                               delegate:nil
+                                                      cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            [alertView show];
         }
     }
     
     [self.tableView reloadData];
 }
 
-/*
--(void)routesStopsHTTPClient:(RoutesHTTPSessionManager *)client didUpdateWithRouteStops:(id)routeStops
-{
-    NSDictionary *tempDict  = routeStops;
-    
-    if(tempDict)
-    {
-        NSArray *rows = [tempDict objectForKey:@"rows"];
-        
-        if(rows)
-        {
-            NSError *err;
-            
-            for(int i=0; i< [rows count];++i)
-            {
-                StopModel* routeStopModel =  [[StopModel alloc] initWithDictionary:[rows objectAtIndex:i] error:&err];
-                if(routeStopModel)
-                {
-                    //NSLog(@">> %@",routeStopModel);
-                    [[[TransitData sharedInstance] routeStops] addObject:routeStopModel];
-                }
-            }
-        }
-    }
-    
-    NSLog(@">>>>>>>>>> Stops found : %d",(int)[[TransitData sharedInstance] routeStops].count);
-}
-
--(void)routesDeparturesHTTPClient:(RoutesHTTPSessionManager *)client didUpdateWithRouteDepartures:(id)routeDepartures
-{
-    
-    NSDictionary *tempDict  = routeDepartures;
-    
-    if(tempDict)
-    {
-        NSArray *rows = [tempDict objectForKey:@"rows"];
-        
-        if(rows)
-        {
-            NSError *err;
-            
-            for(int i=0; i< [rows count];++i)
-            {
-                DeparturesModel* routeDepartureModel =  [[DeparturesModel alloc] initWithDictionary:[rows objectAtIndex:i] error:&err];
-                if(routeDepartureModel)
-                {
-                    //NSLog(@">> %@",routeDepartureModel);
-                    [[[TransitData sharedInstance] routeDepartures] addObject:routeDepartureModel];
-                }
-            }
-        }
-    }
-    
-    NSLog(@">>>>>>>>>>> Departurs found : %d",(int)[[TransitData sharedInstance] routeDepartures].count);
-}
-*/
-
 -(void)routesHTTPClient:(RoutesHTTPSessionManager *)client didFailWithError:(NSError *)error
 {
-    //NSLog(@"%@",error);
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error Retrieving Routes"
                                                         message:[NSString stringWithFormat:@"%@",error]
                                                        delegate:nil

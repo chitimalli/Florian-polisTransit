@@ -19,7 +19,7 @@
 @property(nonatomic,retain) NSMutableArray *routeDeparturesSun;
 
 
-@property(nonatomic,assign) NSString* searchRouteName;
+@property(nonatomic,retain) NSString* searchRouteName;
 @property(nonatomic,assign) NSInteger* searchIndexID;
 
 

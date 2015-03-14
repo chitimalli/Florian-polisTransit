@@ -5,10 +5,10 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Transit Map-->
         <scene sceneID="sXS-0q-w9u">
             <objects>
-                <viewController id="Cky-Cf-txn" sceneMemberID="viewController">
+                <viewController id="Cky-Cf-txn" customClass="TransitMap" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="2b7-6L-tcE"/>
                         <viewControllerLayoutGuide type="bottom" id="PEN-a3-Sqs"/>
@@ -17,12 +17,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Map" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xSE-rg-UZL">
-                                <rect key="frame" x="63" y="121" width="42" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="google-maps-for-ios-screenshot.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="MtL-wP-47d">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -59,25 +56,24 @@
                         </connections>
                     </tableView>
                     <toolbarItems>
-                        <barButtonItem title="Quick" width="112" id="2Fd-ug-LpV">
+                        <barButtonItem title="Test" id="2Fd-ug-LpV">
                             <connections>
                                 <action selector="quickSearch:" destination="G5u-H1-qn5" id="4Ke-Mc-dZr"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="74X-AA-jam"/>
-                        <barButtonItem title="MAP" width="50" id="gZI-MN-EIE">
+                        <barButtonItem image="System-Map-icon.png" id="gZI-MN-EIE">
                             <connections>
                                 <action selector="onSearch:" destination="G5u-H1-qn5" id="aWz-yw-cqr"/>
                                 <segue destination="Cky-Cf-txn" kind="push" id="2me-hj-OhR"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem style="plain" systemItem="flexibleSpace" id="oAR-Xp-oTQ"/>
                     </toolbarItems>
                     <navigationItem key="navigationItem" id="xgV-Cx-oo1">
                         <nil key="title"/>
                         <barButtonItem key="leftBarButtonItem" style="done" id="FWL-vr-WS6">
                             <textField key="customView" opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Search Street..." minimumFontSize="17" id="HZN-zX-UxQ">
-                                <rect key="frame" x="51" y="7" width="219" height="30"/>
+                                <rect key="frame" x="16" y="7" width="290" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
@@ -86,23 +82,10 @@
                                 </connections>
                             </textField>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" id="l9N-NH-e30">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="sEi-cL-eY3">
-                                <rect key="frame" x="-23" y="-15" width="71" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Clear">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="clear:" destination="G5u-H1-qn5" eventType="touchUpInside" id="PJY-5I-r6M"/>
-                                </connections>
-                            </button>
-                        </barButtonItem>
                     </navigationItem>
                     <nil key="simulatedStatusBarMetrics"/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
-                        <outlet property="cancelBtn" destination="sEi-cL-eY3" id="Ztr-vA-Uzt"/>
                         <outlet property="searchBar" destination="HZN-zX-UxQ" id="zRd-M1-gcU"/>
                     </connections>
                 </tableViewController>
@@ -177,7 +160,7 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text=" WEEKDAY    SATURDAY     SUNDAY" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nzU-6T-yEu">
                                 <rect key="frame" x="0.0" y="260" width="320" height="33"/>
                                 <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                                 <color key="shadowColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <size key="shadowOffset" width="0.0" height="0.0"/>
@@ -185,7 +168,7 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="List Of Streets" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vpo-i6-VUv">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="21"/>
                                 <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                                 <color key="shadowColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <size key="shadowOffset" width="0.0" height="0.0"/>
@@ -244,6 +227,10 @@
             <point key="canvasLocation" x="782" y="209"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="System-Map-icon.png" width="26" height="26"/>
+        <image name="google-maps-for-ios-screenshot.jpg" width="281" height="482"/>
+    </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
