@@ -8,6 +8,7 @@
 #import "RouteDetailsView.h"
 #import "StopModel.h"
 #import "DeparturesModel.h"
+#import "TransitData.h"
 
 
 @interface RouteDetailsView ()
@@ -18,6 +19,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.routesHttpSessionMgr = [RoutesHTTPSessionManager sharedRouteHTTPClient];
+    self.routesHttpSessionMgr.delegate = self;
+
     // Do any additional setup after loading the view.
 }
 
@@ -36,6 +40,22 @@
 }
 */
 
+-(void)viewWillAppear:(BOOL)animated
+{
+    NSString* routeName = [[TransitData sharedInstance] searchRouteName];
+    
+    if(routeName)
+        self.title = routeName;
+    
+    int searchRouteID = [[TransitData sharedInstance] searchRouteID];
+    
+    if(searchRouteID>0)
+    {
+        [self.routesHttpSessionMgr findStopsByRouteID:searchRouteID];
+        [self.routesHttpSessionMgr findDeparturesByRouteID:searchRouteID];
+    }
+}
+
 
 #pragma mark - Table view data source
 
@@ -46,27 +66,40 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
+    NSLog(@">> NumRowsFor Table Tag: %d",(int)tableView.tag);
+    
     if(tableView.tag == 0)
     {
-        if(!self.routeStops)
-            return 0;
+//        if(![[TransitData sharedInstance] routeStops])
+//            return 0;
+        //NSLog(@">> Route Stops");
+        int rowCount = (int)[[TransitData sharedInstance] routeStops].count;
         
-        return self.routeStops.count;
+        self.routeStopsText.text = [NSString stringWithFormat:@"%d",rowCount];
+        return rowCount;
 
     }else if(tableView.tag == 1)
     {
-        if(!self.routeDepartures)
-            return 0;
-        
-        return self.routeDepartures.count;
+//        if(![[TransitData sharedInstance] routeDepartures])
+//            return 0;
 
+        //NSLog(@"++ Route Departures");
+
+        int rowCount = (int)[[TransitData sharedInstance] routeDepartures].count;
+
+        self.routeStopsText.text = [NSString stringWithFormat:@"%d",rowCount];
+        
+        return rowCount;
     }
     
+    //NSLog(@"-- Returning default count 0");
     return 0;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    //NSLog(@"** CellForIndexPath Table Tag: %d",(int)tableView.tag);
+
     UITableViewCell *cell = nil;
     if(tableView.tag == 0)
     {
@@ -79,8 +112,8 @@
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         }
         
-        StopModel* cellRoute = [self.routeStops objectAtIndex:indexPath.row];
-        cell.textLabel.text = cellRoute.name;
+        StopModel* cellRoute = [[[TransitData sharedInstance] routeStops] objectAtIndex:indexPath.row];
+        cell.textLabel.text  =  [NSString stringWithFormat:@"%d:%@",cellRoute.id,cellRoute.name];
     }else if(tableView.tag == 1)
     {
         static NSString *CellIdentifier = @"DepartureCell";
@@ -92,8 +125,8 @@
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         }
         
-        DeparturesModel* cellRoute = [self.routeDepartures objectAtIndex:indexPath.row];
-        cell.textLabel.text =[NSString stringWithFormat:@"%@",cellRoute.calendar];
+        DeparturesModel* cellRoute = [[[TransitData sharedInstance] routeDepartures] objectAtIndex:indexPath.row];
+        cell.textLabel.text = [NSString stringWithFormat:@"%d : %@ : %@",cellRoute.id,cellRoute.calendar,cellRoute.time];
         
     }
     
@@ -109,6 +142,76 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
+}
+
+#pragma mark - Route Details Loaded
+//-(void)routesStopsHTTPClient:(RoutesHTTPSessionManager *)client didUpdateWithRouteStops:(id)routeStops{}
+
+-(void)routesStopsHTTPClient:(RoutesHTTPSessionManager *)client didUpdateWithRouteStops:(id)routeStops
+{
+    NSDictionary *tempDict  = routeStops;
+    
+    if(tempDict)
+    {
+        NSArray *rows = [tempDict objectForKey:@"rows"];
+        
+        if(rows)
+        {
+            NSError *err;
+            
+            for(int i=0; i< [rows count];++i)
+            {
+                StopModel* routeStopModel =  [[StopModel alloc] initWithDictionary:[rows objectAtIndex:i] error:&err];
+                if(routeStopModel)
+                {
+                    //NSLog(@">> %@",routeStopModel);
+                    [[[TransitData sharedInstance] routeStops] addObject:routeStopModel];
+                }
+            }
+        }
+    }
+    [self.stopsTable reloadData];
+    NSLog(@">>>>>>>>>> Stops found : %d",(int)[[TransitData sharedInstance] routeStops].count);
+}
+
+-(void)routesDeparturesHTTPClient:(RoutesHTTPSessionManager *)client didUpdateWithRouteDepartures:(id)routeDepartures
+{
+    
+    NSDictionary *tempDict  = routeDepartures;
+    
+    if(tempDict)
+    {
+        NSArray *rows = [tempDict objectForKey:@"rows"];
+        
+        if(rows)
+        {
+            NSError *err;
+            
+            for(int i=0; i< [rows count];++i)
+            {
+                DeparturesModel* routeDepartureModel =  [[DeparturesModel alloc] initWithDictionary:[rows objectAtIndex:i] error:&err];
+                if(routeDepartureModel)
+                {
+                    //NSLog(@">> %@",routeDepartureModel);
+                    [[[TransitData sharedInstance] routeDepartures] addObject:routeDepartureModel];
+                }
+            }
+        }
+    }
+    [self.departuresTable reloadData];
+
+    NSLog(@">>>>>>>>>>> Departurs found : %d",(int)[[TransitData sharedInstance] routeDepartures].count);
+}
+
+
+-(void)routesHTTPClient:(RoutesHTTPSessionManager *)client didFailWithError:(NSError *)error
+{
+    //NSLog(@"%@",error);
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error Retrieving Details"
+                                                        message:[NSString stringWithFormat:@"%@",error]
+                                                       delegate:nil
+                                              cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    [alertView show];
 }
 
 

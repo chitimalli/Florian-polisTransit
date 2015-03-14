@@ -8,11 +8,12 @@
 #import "RouteModel.h"
 #import "DeparturesModel.h"
 #import "StopModel.h"
+#import "TransitData.h"
 
 @interface RoutesTableViewController ()
-@property(nonatomic,retain) NSMutableArray *routes;
-@property(nonatomic,retain) NSMutableArray *routeStops;
-@property(nonatomic,retain) NSMutableArray *routeDepartures;
+//@property(nonatomic,retain) NSMutableArray *routes;
+//@property(nonatomic,retain) NSMutableArray *routeStops;
+//@property(nonatomic,retain) NSMutableArray *routeDepartures;
 @end
 
 @implementation RoutesTableViewController
@@ -33,7 +34,6 @@
     
     self.routesHttpSessionMgr = [RoutesHTTPSessionManager sharedRouteHTTPClient];
     self.routesHttpSessionMgr.delegate = self;
-    
 }
 
 -(BOOL)prefersStatusBarHidden{return YES;}
@@ -57,18 +57,25 @@
 - (IBAction)clear:(id)sender
 {
     self.searchBar.text = @"";
+    
+    [[TransitData sharedInstance] initRoutesDataWith:@""];
+   
+    [self.tableView reloadData];
 }
 
-- (IBAction)searchTapped:(id)sender
+- (IBAction)quickSearch:(id)sender
 {
+    [[TransitData sharedInstance] initRoutesDataWith:@"Governador Irineu Bornhausen"];
     [self.routesHttpSessionMgr findRoutesByName:@"Governador Irineu Bornhausen"];
+
 //    [self.routesHttpSessionMgr findStopsByRouteID:22];
 //    [self.routesHttpSessionMgr findDeparturesByRouteID:22];
 }
 
 - (IBAction)onSearch:(id)sender
 {
-    NSLog(@">>> About to search %@",self.searchBar.text);
+    [[TransitData sharedInstance] initRoutesDataWith:self.searchBar.text];
+
     [self.routesHttpSessionMgr findRoutesByName:self.searchBar.text];
     self.searchBar.text = @"";
 }
@@ -83,13 +90,12 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    
-    if(!self.routes)
+    if(![[TransitData sharedInstance] routes])
         return 0;
     
     //NSLog(@">> Table Routes Count: %d",(int)self.routes.count);
     
-    return self.routes.count;
+    return [[TransitData sharedInstance] routes].count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -103,8 +109,8 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     
-    RouteModel* cellRoute = [self.routes objectAtIndex:indexPath.row];
-    cell.textLabel.text = cellRoute.longName;
+    RouteModel* cellRoute = [ [[TransitData sharedInstance]routes] objectAtIndex:indexPath.row];
+    cell.textLabel.text  = [NSString stringWithFormat:@"%d:%@",cellRoute.id,cellRoute.longName];
     
     return cell;
 }
@@ -115,32 +121,26 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // Navigation logic may go here. Create and push another view controller.
-    RouteModel* cellRoute = [self.routes objectAtIndex:indexPath.row];
+    RouteModel* cellRoute = [[[TransitData sharedInstance] routes] objectAtIndex:indexPath.row];
     
     if(cellRoute)
     {
-        NSLog(@">>> %d",[cellRoute id]);
-        
-        [self.routesHttpSessionMgr findStopsByRouteID:[cellRoute id]];
-        [self.routesHttpSessionMgr findDeparturesByRouteID:[cellRoute id]];
-
+        [[TransitData sharedInstance] initDetailsDataWith:[cellRoute id]];
+        NSLog(@">>> About to find Stops and departures for RouteID: %d",[cellRoute id]);
     }
-    
 }
 
 #pragma mark - Routes HTTP delegate
 
 -(void)routesHTTPClient:(RoutesHTTPSessionManager *)client didUpdateWithRoutes:(id)routes
 {
-    self.routes = [[NSMutableArray alloc] initWithObjects:nil];
-    
     NSDictionary *tempDict  = routes;
    
     if(tempDict)
     {
         NSArray *rows = [tempDict objectForKey:@"rows"];
         
-        if(rows)
+        if(rows && [rows count] > 0)
         {
             NSError *err;
             
@@ -149,8 +149,8 @@
                RouteModel* routeModel =  [[RouteModel alloc] initWithDictionary:[rows objectAtIndex:i] error:&err];
                 if(routeModel)
                 {
-                    NSLog(@">> %@",routeModel);
-                    [self.routes addObject:routeModel];
+                    //NSLog(@">> %@",routeModel);
+                    [[[TransitData sharedInstance] routes] addObject:routeModel];
                 }
             }
         }
@@ -159,10 +159,9 @@
     [self.tableView reloadData];
 }
 
+/*
 -(void)routesStopsHTTPClient:(RoutesHTTPSessionManager *)client didUpdateWithRouteStops:(id)routeStops
 {
-    self.routeStops = [[NSMutableArray alloc] initWithObjects:nil];
-    
     NSDictionary *tempDict  = routeStops;
     
     if(tempDict)
@@ -178,19 +177,18 @@
                 StopModel* routeStopModel =  [[StopModel alloc] initWithDictionary:[rows objectAtIndex:i] error:&err];
                 if(routeStopModel)
                 {
-                    NSLog(@">> %@",routeStopModel);
-                    [self.routeStops addObject:routeStopModel];
+                    //NSLog(@">> %@",routeStopModel);
+                    [[[TransitData sharedInstance] routeStops] addObject:routeStopModel];
                 }
             }
         }
     }
     
-    NSLog(@">> Stops : %d",(int)self.routeStops.count);
+    NSLog(@">>>>>>>>>> Stops found : %d",(int)[[TransitData sharedInstance] routeStops].count);
 }
 
 -(void)routesDeparturesHTTPClient:(RoutesHTTPSessionManager *)client didUpdateWithRouteDepartures:(id)routeDepartures
 {
-    self.routeDepartures = [[NSMutableArray alloc] initWithObjects:nil];
     
     NSDictionary *tempDict  = routeDepartures;
     
@@ -207,16 +205,16 @@
                 DeparturesModel* routeDepartureModel =  [[DeparturesModel alloc] initWithDictionary:[rows objectAtIndex:i] error:&err];
                 if(routeDepartureModel)
                 {
-                    NSLog(@">> %@",routeDepartureModel);
-                    [self.routeDepartures addObject:routeDepartureModel];
+                    //NSLog(@">> %@",routeDepartureModel);
+                    [[[TransitData sharedInstance] routeDepartures] addObject:routeDepartureModel];
                 }
             }
         }
     }
     
-    NSLog(@">> Departurs : %d",(int)self.routeDepartures.count);
+    NSLog(@">>>>>>>>>>> Departurs found : %d",(int)[[TransitData sharedInstance] routeDepartures].count);
 }
-
+*/
 
 -(void)routesHTTPClient:(RoutesHTTPSessionManager *)client didFailWithError:(NSError *)error
 {

@@ -6,13 +6,17 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "RoutesHTTPSessionManager.h"
 
-@interface RouteDetailsView : UIViewController//<UITableViewDelegate,UITableViewDataSource>
+@interface RouteDetailsView : UIViewController<RoutesHTTPClientDelegate,UITableViewDelegate,UITableViewDataSource>
 
-@property(nonatomic,retain) NSMutableArray *routeStops;
-@property(nonatomic,retain) NSMutableArray *routeDepartures;
+@property(nonatomic) RoutesHTTPSessionManager *routesHttpSessionMgr;
 
 @property(weak,nonatomic) IBOutlet UITableView *stopsTable;
 @property(weak,nonatomic) IBOutlet UITableView *departuresTable;
+
+@property (nonatomic,assign) IBOutlet UILabel *routeStopsText;
+@property (nonatomic,assign) IBOutlet UILabel *routedeparturesText;
+
 
 @end

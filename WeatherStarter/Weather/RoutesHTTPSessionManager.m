@@ -40,8 +40,6 @@ static NSString * const AppGluOnlineURLString = @"https://api.appglu.com/v1/quer
 
 -(void)findRoutesByName:(NSString *)routeName
 {
-    NSLog(@"About to find routes by Name : %@",routeName);
-    
     NSString *route = [NSString stringWithFormat:@"%%%@%%", routeName];
     
     NSDictionary *routeNameDict = @{@"stopName": route};

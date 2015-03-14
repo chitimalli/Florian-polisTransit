@@ -39,6 +39,7 @@
 		81A24A471AB26CDD00C0A763 /* JSONModel+networking.m in Sources */ = {isa = PBXBuildFile; fileRef = 81A24A3A1AB26CDD00C0A763 /* JSONModel+networking.m */; };
 		81A24A481AB26CDD00C0A763 /* JSONKeyMapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 81A24A3D1AB26CDD00C0A763 /* JSONKeyMapper.m */; };
 		81A24A491AB26CDD00C0A763 /* JSONValueTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 81A24A3F1AB26CDD00C0A763 /* JSONValueTransformer.m */; };
+		81B99B451AB4A23A00AC3021 /* TransitData.m in Sources */ = {isa = PBXBuildFile; fileRef = 81B99B441AB4A23A00AC3021 /* TransitData.m */; };
 		D233D07A16B400EF005212DE /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D233D07816B400EF005212DE /* InfoPlist.strings */; };
 		D233D07C16B400EF005212DE /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D233D07B16B400EF005212DE /* main.m */; };
 		D233D08016B400EF005212DE /* WTAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D233D07F16B400EF005212DE /* WTAppDelegate.m */; };
@@ -122,6 +123,8 @@
 		81A24A3D1AB26CDD00C0A763 /* JSONKeyMapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONKeyMapper.m; sourceTree = "<group>"; };
 		81A24A3E1AB26CDD00C0A763 /* JSONValueTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONValueTransformer.h; sourceTree = "<group>"; };
 		81A24A3F1AB26CDD00C0A763 /* JSONValueTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONValueTransformer.m; sourceTree = "<group>"; };
+		81B99B431AB4A23A00AC3021 /* TransitData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransitData.h; sourceTree = "<group>"; };
+		81B99B441AB4A23A00AC3021 /* TransitData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransitData.m; sourceTree = "<group>"; };
 		D233D06B16B400EF005212DE /* Transit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Transit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D233D07716B400EF005212DE /* Transit-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Transit-Info.plist"; sourceTree = "<group>"; };
 		D233D07916B400EF005212DE /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -317,6 +320,7 @@
 		D233D07516B400EF005212DE /* Routes */ = {
 			isa = PBXGroup;
 			children = (
+				D233D07616B400EF005212DE /* Supporting Files */,
 				81A249EC1AB26B7B00C0A763 /* AFNetworking */,
 				81A24A001AB26B7B00C0A763 /* UIKit+AFNetworking */,
 				81A24A261AB26CDD00C0A763 /* JSONModel */,
@@ -328,9 +332,10 @@
 				D233D07F16B400EF005212DE /* WTAppDelegate.m */,
 				D233D09216B4011B005212DE /* RoutesTableViewController.h */,
 				D233D09316B4011B005212DE /* RoutesTableViewController.m */,
-				D233D07616B400EF005212DE /* Supporting Files */,
 				810F751E1AB3AF980092D66E /* RouteDetailsView.h */,
 				810F751F1AB3AF980092D66E /* RouteDetailsView.m */,
+				81B99B431AB4A23A00AC3021 /* TransitData.h */,
+				81B99B441AB4A23A00AC3021 /* TransitData.m */,
 			);
 			name = Routes;
 			path = Weather;
@@ -420,6 +425,7 @@
 				81A24A151AB26B7B00C0A763 /* AFNetworkReachabilityManager.m in Sources */,
 				81A24A1B1AB26B7B00C0A763 /* AFNetworkActivityIndicatorManager.m in Sources */,
 				D233D09416B4011B005212DE /* RoutesTableViewController.m in Sources */,
+				81B99B451AB4A23A00AC3021 /* TransitData.m in Sources */,
 				81A24A171AB26B7B00C0A763 /* AFURLConnectionOperation.m in Sources */,
 				81A24A201AB26B7B00C0A763 /* UIProgressView+AFNetworking.m in Sources */,
 				81A24A451AB26CDD00C0A763 /* JSONAPI.m in Sources */,
