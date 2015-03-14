@@ -11,9 +11,6 @@
 #import "TransitData.h"
 
 @interface RoutesTableViewController ()
-//@property(nonatomic,retain) NSMutableArray *routes;
-//@property(nonatomic,retain) NSMutableArray *routeStops;
-//@property(nonatomic,retain) NSMutableArray *routeDepartures;
 @end
 
 @implementation RoutesTableViewController
@@ -34,6 +31,15 @@
     
     self.routesHttpSessionMgr = [RoutesHTTPSessionManager sharedRouteHTTPClient];
     self.routesHttpSessionMgr.delegate = self;
+}
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    self.searchBar.returnKeyType = UIReturnKeySearch;
+    
+    [self.navigationController setToolbarHidden:NO animated:YES];
+
 }
 
 -(BOOL)prefersStatusBarHidden{return YES;}
@@ -57,7 +63,6 @@
 - (IBAction)clear:(id)sender
 {
     self.searchBar.text = @"";
-    
     [[TransitData sharedInstance] initRoutesDataWith:@""];
    
     [self.tableView reloadData];
@@ -65,18 +70,19 @@
 
 - (IBAction)quickSearch:(id)sender
 {
-    [[TransitData sharedInstance] initRoutesDataWith:@"Governador Irineu Bornhausen"];
-    [self.routesHttpSessionMgr findRoutesByName:@"Governador Irineu Bornhausen"];
-
-//    [self.routesHttpSessionMgr findStopsByRouteID:22];
-//    [self.routesHttpSessionMgr findDeparturesByRouteID:22];
+    NSString* quickSearchName = @"Governador Irineu Bornhausen";
+    
+    [[TransitData sharedInstance] initRoutesDataWith:quickSearchName];
+    [self.routesHttpSessionMgr findRoutesByName:quickSearchName];
 }
 
 - (IBAction)onSearch:(id)sender
 {
-    [[TransitData sharedInstance] initRoutesDataWith:self.searchBar.text];
-
-    [self.routesHttpSessionMgr findRoutesByName:self.searchBar.text];
+    NSString* userSearchName = self.searchBar.text;
+    
+    [[TransitData sharedInstance] initRoutesDataWith:userSearchName];
+    [self.routesHttpSessionMgr findRoutesByName:userSearchName];
+    
     self.searchBar.text = @"";
 }
 
@@ -93,8 +99,6 @@
     if(![[TransitData sharedInstance] routes])
         return 0;
     
-    //NSLog(@">> Table Routes Count: %d",(int)self.routes.count);
-    
     return [[TransitData sharedInstance] routes].count;
 }
 
@@ -110,7 +114,7 @@
     }
     
     RouteModel* cellRoute = [ [[TransitData sharedInstance]routes] objectAtIndex:indexPath.row];
-    cell.textLabel.text  = [NSString stringWithFormat:@"%d:%@",cellRoute.id,cellRoute.longName];
+    cell.textLabel.text  = [NSString stringWithFormat:@"%@",cellRoute.longName];
     
     return cell;
 }
@@ -121,12 +125,12 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // Navigation logic may go here. Create and push another view controller.
-    RouteModel* cellRoute = [[[TransitData sharedInstance] routes] objectAtIndex:indexPath.row];
+    //RouteModel* cellRoute = [[[TransitData sharedInstance] routes] objectAtIndex:indexPath.row];
     
-    if(cellRoute)
+    //if(cellRoute)
     {
-        [[TransitData sharedInstance] initDetailsDataWith:[cellRoute id]];
-        NSLog(@">>> About to find Stops and departures for RouteID: %d",[cellRoute id]);
+        [[TransitData sharedInstance] initDetailsDataWith:indexPath.row];
+        //NSLog(@">>> About to find Stops and departures for RouteID: %d",[cellRoute id]);
     }
 }
 

@@ -27,13 +27,20 @@
     self.routes = [[NSMutableArray alloc] initWithObjects: nil];
 }
 
--(void) initDetailsDataWith:(NSInteger*)searchRouteID
+-(void) initDetailsDataWith:(NSInteger*)searchIndexID
 {
-    self.searchRouteID      = searchRouteID;
-    self.routeDepartures    = nil;
-    self.routeStops         = nil;
-    self.routeDepartures    = [[NSMutableArray alloc] initWithObjects: nil];
-    self.routeStops         = [[NSMutableArray alloc] initWithObjects: nil];
+    self.searchIndexID      = searchIndexID;
+
+    self.routeDeparturesWeekday = nil;
+    self.routeDeparturesSat     = nil;
+    self.routeDeparturesSun     = nil;
+    
+    self.routeStops                 = nil;
+    self.routeDeparturesWeekday     = [[NSMutableArray alloc] initWithObjects: nil];
+    self.routeDeparturesSat         = [[NSMutableArray alloc] initWithObjects: nil];
+    self.routeDeparturesSun         = [[NSMutableArray alloc] initWithObjects: nil];
+    
+    self.routeStops                 = [[NSMutableArray alloc] initWithObjects: nil];
 }
 
 @end

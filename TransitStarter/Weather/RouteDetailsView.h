@@ -13,7 +13,9 @@
 @property(nonatomic) RoutesHTTPSessionManager *routesHttpSessionMgr;
 
 @property(weak,nonatomic) IBOutlet UITableView *stopsTable;
-@property(weak,nonatomic) IBOutlet UITableView *departuresTable;
+@property(weak,nonatomic) IBOutlet UITableView *departuresWeekdayTable;
+@property(weak,nonatomic) IBOutlet UITableView *departuresSatTable;
+@property(weak,nonatomic) IBOutlet UITableView *departuresSunTable;
 
 @property (nonatomic,assign) IBOutlet UILabel *routeStopsText;
 @property (nonatomic,assign) IBOutlet UILabel *routedeparturesText;

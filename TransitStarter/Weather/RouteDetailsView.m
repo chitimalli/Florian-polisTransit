@@ -9,6 +9,7 @@
 #import "StopModel.h"
 #import "DeparturesModel.h"
 #import "TransitData.h"
+#import "RouteModel.h"
 
 
 @interface RouteDetailsView ()
@@ -21,7 +22,7 @@
     [super viewDidLoad];
     self.routesHttpSessionMgr = [RoutesHTTPSessionManager sharedRouteHTTPClient];
     self.routesHttpSessionMgr.delegate = self;
-
+    
     // Do any additional setup after loading the view.
 }
 
@@ -29,6 +30,8 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+-(BOOL)prefersStatusBarHidden{return YES;}
 
 /*
 #pragma mark - Navigation
@@ -42,17 +45,20 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
-    NSString* routeName = [[TransitData sharedInstance] searchRouteName];
+    //NSString* routeName     = [[TransitData sharedInstance] searchRouteName];
+    [self.navigationController setToolbarHidden:YES animated:YES];
+
+    int searchIndexID       = [[TransitData sharedInstance] searchIndexID];
+    RouteModel* RouteToSearch = [[[TransitData sharedInstance] routes] objectAtIndex:searchIndexID];
     
-    if(routeName)
-        self.title = routeName;
-    
-    int searchRouteID = [[TransitData sharedInstance] searchRouteID];
-    
-    if(searchRouteID>0)
+    if(RouteToSearch)
     {
-        [self.routesHttpSessionMgr findStopsByRouteID:searchRouteID];
-        [self.routesHttpSessionMgr findDeparturesByRouteID:searchRouteID];
+        self.title = RouteToSearch.longName;
+        
+        {
+            [self.routesHttpSessionMgr findStopsByRouteID:RouteToSearch.id];
+            [self.routesHttpSessionMgr findDeparturesByRouteID:RouteToSearch.id];
+        }
     }
 }
 
@@ -66,7 +72,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    NSLog(@">> NumRowsFor Table Tag: %d",(int)tableView.tag);
+    //NSLog(@">> NumRowsFor Table Tag: %d",(int)tableView.tag);
     
     if(tableView.tag == 0)
     {
@@ -80,13 +86,22 @@
 
     }else if(tableView.tag == 1)
     {
-//        if(![[TransitData sharedInstance] routeDepartures])
-//            return 0;
+        int rowCount = (int)[[TransitData sharedInstance] routeDeparturesWeekday].count;
 
-        //NSLog(@"++ Route Departures");
-
-        int rowCount = (int)[[TransitData sharedInstance] routeDepartures].count;
-
+        self.routeStopsText.text = [NSString stringWithFormat:@"%d",rowCount];
+        
+        return rowCount;
+    }else if(tableView.tag == 2)
+    {
+        int rowCount = (int)[[TransitData sharedInstance] routeDeparturesSat].count;
+        
+        self.routeStopsText.text = [NSString stringWithFormat:@"%d",rowCount];
+        
+        return rowCount;
+    }else if(tableView.tag == 3)
+    {
+        int rowCount = (int)[[TransitData sharedInstance] routeDeparturesSun].count;
+        
         self.routeStopsText.text = [NSString stringWithFormat:@"%d",rowCount];
         
         return rowCount;
@@ -116,7 +131,7 @@
         cell.textLabel.text  =  [NSString stringWithFormat:@"%d:%@",cellRoute.id,cellRoute.name];
     }else if(tableView.tag == 1)
     {
-        static NSString *CellIdentifier = @"DepartureCell";
+        static NSString *CellIdentifier = @"DepartureCellWeekday";
         cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
         
         // Configure the cell...
@@ -125,8 +140,36 @@
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         }
         
-        DeparturesModel* cellRoute = [[[TransitData sharedInstance] routeDepartures] objectAtIndex:indexPath.row];
-        cell.textLabel.text = [NSString stringWithFormat:@"%d : %@ : %@",cellRoute.id,cellRoute.calendar,cellRoute.time];
+        DeparturesModel* cellRoute = [[[TransitData sharedInstance] routeDeparturesWeekday] objectAtIndex:indexPath.row];
+        cell.textLabel.text = [NSString stringWithFormat:@"%@",cellRoute.time];
+        
+    }else if(tableView.tag == 2)
+    {
+        static NSString *CellIdentifier = @"DepartureCellSat";
+        cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+        
+        // Configure the cell...
+        if(cell == nil)
+        {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        }
+        
+        DeparturesModel* cellRoute = [[[TransitData sharedInstance] routeDeparturesSat] objectAtIndex:indexPath.row];
+        cell.textLabel.text = [NSString stringWithFormat:@"%@",cellRoute.time];
+        
+    }else if(tableView.tag == 3)
+    {
+        static NSString *CellIdentifier = @"DepartureCellSun";
+        cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+        
+        // Configure the cell...
+        if(cell == nil)
+        {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        }
+        
+        DeparturesModel* cellRoute = [[[TransitData sharedInstance] routeDeparturesSun] objectAtIndex:indexPath.row];
+        cell.textLabel.text = [NSString stringWithFormat:@"%@",cellRoute.time];
         
     }
     
@@ -171,7 +214,7 @@
         }
     }
     [self.stopsTable reloadData];
-    NSLog(@">>>>>>>>>> Stops found : %d",(int)[[TransitData sharedInstance] routeStops].count);
+    //NSLog(@">>>>>>>>>> Stops found : %d",(int)[[TransitData sharedInstance] routeStops].count);
 }
 
 -(void)routesDeparturesHTTPClient:(RoutesHTTPSessionManager *)client didUpdateWithRouteDepartures:(id)routeDepartures
@@ -193,14 +236,25 @@
                 if(routeDepartureModel)
                 {
                     //NSLog(@">> %@",routeDepartureModel);
-                    [[[TransitData sharedInstance] routeDepartures] addObject:routeDepartureModel];
+                    
+                    if([routeDepartureModel.calendar isEqualToString:@"WEEKDAY"])
+                        [[[TransitData sharedInstance] routeDeparturesWeekday] addObject:routeDepartureModel];
+                    else if([routeDepartureModel.calendar isEqualToString:@"SATURDAY"])
+                        [[[TransitData sharedInstance] routeDeparturesSat] addObject:routeDepartureModel];
+                    else if([routeDepartureModel.calendar isEqualToString:@"SUNDAY"])
+                        [[[TransitData sharedInstance] routeDeparturesSun] addObject:routeDepartureModel];
+                    
                 }
             }
         }
     }
-    [self.departuresTable reloadData];
+    
+    [self.departuresWeekdayTable reloadData];
+    [self.departuresSatTable reloadData];
+    [self.departuresSunTable reloadData];
+    
 
-    NSLog(@">>>>>>>>>>> Departurs found : %d",(int)[[TransitData sharedInstance] routeDepartures].count);
+   // NSLog(@">>>>>>>>>>> Departurs found : %d",(int)[[TransitData sharedInstance] routeDepartures].count);
 }
 
 

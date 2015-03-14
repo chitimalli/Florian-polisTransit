@@ -13,13 +13,17 @@
 + (id)sharedInstance;
 @property(nonatomic,retain) NSMutableArray *routes;
 @property(nonatomic,retain) NSMutableArray *routeStops;
-@property(nonatomic,retain) NSMutableArray *routeDepartures;
+
+@property(nonatomic,retain) NSMutableArray *routeDeparturesWeekday;
+@property(nonatomic,retain) NSMutableArray *routeDeparturesSat;
+@property(nonatomic,retain) NSMutableArray *routeDeparturesSun;
+
 
 @property(nonatomic,assign) NSString* searchRouteName;
-@property(nonatomic,assign) NSInteger* searchRouteID;
+@property(nonatomic,assign) NSInteger* searchIndexID;
 
 
 -(void) initRoutesDataWith:(NSString*)searchRouteName;
--(void) initDetailsDataWith:(NSInteger*)searchRouteID;
+-(void) initDetailsDataWith:(NSInteger*)searchIndexID;
 
 @end
