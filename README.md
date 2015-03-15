@@ -20,3 +20,48 @@ The user may tap on a route listed to go to the next screen showing the route's 
 
 - The Details view shows the Route's name, the list of streets within the route and its 
 timetable organised by type of the day -- weekday, saturday or sunday.
+
+
+///////////////////////////////////////////////
+		ArcTouct Test- Implementation Documentation
+///////////////////////////////////////////////
+
+
+>> RoutesHTTPSessionManager 
+- BaseHTTPURL AppGluOnlineURLString = @"https://api.appglu.com/v1/queries/";
+- This Class used AFNetworking to connect to the service to make REST based HTTP POST calls
+
+
+
+>> RoutesHTTPClientDelegate
+- This is the protocol, that has to be implemented bu the below UIView Classe on Response
+
+
+
+>> TransitData <<
+- This class is a Singleton Data manager that will manage the Data for the query 
+
+
+
+>>> JSONModel Classes
+    - RouteModel		[Implements RouteJSON model for response from "findRoutesByStopName"]
+    - StopModel 		[Implements RouteJSON model for response from "findStopsByRouteId"]
+    - DeparturesModel 	[Implements RouteJSON model for response from "findDeparturesByRouteId"]
+
+
+
+>> RoutesTableViewController <<
+- This screen has the "Search" bar that can be used to search a street name
+- There is a "Test" button to search some hardcoded street name
+- There is Map button to navigate to the MapView
+
+
+
+>> RouteDetailsView <<
+- This View has 4 UI tables, all using same view as a TableView Delegate 
+- The TOP table, displays the list of stops in the given route
+- The bottom three tables, sort he times based on the WeekDay/SAT/SUN
+
+
+>> TransitMapView
+- Not implemented yet, have a placeholder map image

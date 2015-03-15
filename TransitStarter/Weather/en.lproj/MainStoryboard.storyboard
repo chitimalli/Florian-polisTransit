@@ -5,10 +5,10 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
     </dependencies>
     <scenes>
-        <!--Transit Map-->
+        <!--Transit Map View-->
         <scene sceneID="sXS-0q-w9u">
             <objects>
-                <viewController id="Cky-Cf-txn" customClass="TransitMap" sceneMemberID="viewController">
+                <viewController id="Cky-Cf-txn" customClass="TransitMapView" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="2b7-6L-tcE"/>
                         <viewControllerLayoutGuide type="bottom" id="PEN-a3-Sqs"/>

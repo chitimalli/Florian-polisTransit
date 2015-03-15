@@ -6,13 +6,13 @@
 //  Copyright (c) 2015 FaunaFace. All rights reserved.
 //
 
-#import "TransitMap.h"
+#import "TransitMapView.h"
 
-@interface TransitMap ()
+@interface TransitMapView ()
 
 @end
 
-@implementation TransitMap
+@implementation TransitMapView
 
 - (void)viewDidLoad {
     [super viewDidLoad];

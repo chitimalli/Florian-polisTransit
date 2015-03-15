@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface TransitMap : UIViewController
+@interface TransitMapView : UIViewController
 
 @end

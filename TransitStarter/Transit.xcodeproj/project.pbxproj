@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		8102A7B21AB4F42F00B39473 /* System-Map-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 8102A7B11AB4F42F00B39473 /* System-Map-icon.png */; };
-		8102A7B51AB4F58E00B39473 /* TransitMap.m in Sources */ = {isa = PBXBuildFile; fileRef = 8102A7B41AB4F58E00B39473 /* TransitMap.m */; };
+		8102A7B51AB4F58E00B39473 /* TransitMapView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8102A7B41AB4F58E00B39473 /* TransitMapView.m */; };
 		8102A7B71AB4F6AF00B39473 /* google-maps-for-ios-screenshot.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 8102A7B61AB4F6AF00B39473 /* google-maps-for-ios-screenshot.jpg */; };
 		810F75201AB3AF980092D66E /* RouteDetailsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 810F751F1AB3AF980092D66E /* RouteDetailsView.m */; };
 		8160CE7E1AB3863B00303586 /* RouteModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8160CE7D1AB3863B00303586 /* RouteModel.m */; };
@@ -60,8 +60,8 @@
 
 /* Begin PBXFileReference section */
 		8102A7B11AB4F42F00B39473 /* System-Map-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "System-Map-icon.png"; sourceTree = "<group>"; };
-		8102A7B31AB4F58E00B39473 /* TransitMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransitMap.h; sourceTree = "<group>"; };
-		8102A7B41AB4F58E00B39473 /* TransitMap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransitMap.m; sourceTree = "<group>"; };
+		8102A7B31AB4F58E00B39473 /* TransitMapView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransitMapView.h; sourceTree = "<group>"; };
+		8102A7B41AB4F58E00B39473 /* TransitMapView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransitMapView.m; sourceTree = "<group>"; };
 		8102A7B61AB4F6AF00B39473 /* google-maps-for-ios-screenshot.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "google-maps-for-ios-screenshot.jpg"; sourceTree = "<group>"; };
 		810F751E1AB3AF980092D66E /* RouteDetailsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RouteDetailsView.h; sourceTree = "<group>"; };
 		810F751F1AB3AF980092D66E /* RouteDetailsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RouteDetailsView.m; sourceTree = "<group>"; };
@@ -354,8 +354,8 @@
 				810F751F1AB3AF980092D66E /* RouteDetailsView.m */,
 				81B99B431AB4A23A00AC3021 /* TransitData.h */,
 				81B99B441AB4A23A00AC3021 /* TransitData.m */,
-				8102A7B31AB4F58E00B39473 /* TransitMap.h */,
-				8102A7B41AB4F58E00B39473 /* TransitMap.m */,
+				8102A7B31AB4F58E00B39473 /* TransitMapView.h */,
+				8102A7B41AB4F58E00B39473 /* TransitMapView.m */,
 			);
 			name = Routes;
 			path = Weather;
@@ -443,7 +443,7 @@
 				810F75201AB3AF980092D66E /* RouteDetailsView.m in Sources */,
 				81A24A1A1AB26B7B00C0A763 /* AFURLSessionManager.m in Sources */,
 				D233D07C16B400EF005212DE /* main.m in Sources */,
-				8102A7B51AB4F58E00B39473 /* TransitMap.m in Sources */,
+				8102A7B51AB4F58E00B39473 /* TransitMapView.m in Sources */,
 				D233D08016B400EF005212DE /* WTAppDelegate.m in Sources */,
 				81A24A151AB26B7B00C0A763 /* AFNetworkReachabilityManager.m in Sources */,
 				81A24A1B1AB26B7B00C0A763 /* AFNetworkActivityIndicatorManager.m in Sources */,
