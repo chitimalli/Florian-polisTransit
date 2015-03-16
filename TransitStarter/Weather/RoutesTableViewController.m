@@ -29,6 +29,8 @@
     [super viewDidLoad];
     self.navigationController.toolbarHidden = NO;
     
+    self.tableView.keyboardDismissMode = UIScrollViewKeyboardDismissModeInteractive;
+    
     self.routesHttpSessionMgr = [RoutesHTTPSessionManager sharedRouteHTTPClient];
     self.routesHttpSessionMgr.delegate = self;
 }
@@ -37,8 +39,15 @@
 {
     [super viewWillAppear:animated];
     self.searchBar.returnKeyType = UIReturnKeySearch;
+    self.searchBar.clearButtonMode = UITextFieldViewModeWhileEditing;
+    
     
     [self.navigationController setToolbarHidden:NO animated:YES];
+}
+
+-(void)dismissKeyboard {
+    [self.searchBar resignFirstResponder];
+    self.searchBar.text = @"";
 }
 
 //-(BOOL)prefersStatusBarHidden{return YES;}
@@ -63,7 +72,7 @@
 {
     self.searchBar.text = @"";
     [[TransitData sharedInstance] initRoutesDataWith:@""];
-   
+    
     [self.tableView reloadData];
 }
 
@@ -138,7 +147,7 @@
 -(void)routesHTTPClient:(RoutesHTTPSessionManager *)client didUpdateWithRoutes:(id)routes
 {
     NSDictionary *tempDict  = routes;
-   
+    
     if(tempDict)
     {
         NSArray *rows = [tempDict objectForKey:@"rows"];
@@ -149,7 +158,7 @@
             
             for(int i=0; i< [rows count];++i)
             {
-               RouteModel* routeModel =  [[RouteModel alloc] initWithDictionary:[rows objectAtIndex:i] error:&err];
+                RouteModel* routeModel =  [[RouteModel alloc] initWithDictionary:[rows objectAtIndex:i] error:&err];
                 if(routeModel)
                 {
                     
@@ -161,7 +170,7 @@
             NSString *streetTried = [[TransitData sharedInstance] searchRouteName];
             
             //NSLog(@">> Err Street name: %@",streetTried);
-
+            
             UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"No Routes found"
                                                                 message:[NSString stringWithFormat:@"No routes for Street:%@. Try a new Street name..",streetTried]
                                                                delegate:nil
