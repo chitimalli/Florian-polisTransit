@@ -7,7 +7,7 @@
 #import <UIKit/UIKit.h>
 #import "RoutesHTTPSessionManager.h"
 
-@interface RoutesTableViewController : UITableViewController<RoutesHTTPClientDelegate,UITextFieldDelegate>
+@interface RoutesTableViewController : UITableViewController<RoutesHTTPClientDelegate,UITextFieldDelegate,UIActionSheetDelegate>
 
 @property(nonatomic) RoutesHTTPSessionManager *routesHttpSessionMgr;
 @property(nonatomic,weak) IBOutlet UITextField *searchBar;

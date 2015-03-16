@@ -78,10 +78,12 @@
 
 - (IBAction)quickSearch:(id)sender
 {
-    NSString* quickSearchName = @"Governador Irineu Bornhausen";
-    
-    [[TransitData sharedInstance] initRoutesDataWith:quickSearchName];
-    [self.routesHttpSessionMgr findRoutesByName:quickSearchName];
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Test Streets"
+                                                             delegate:self
+                                                    cancelButtonTitle:@"Cancel"
+                                               destructiveButtonTitle:nil
+                                                    otherButtonTitles:@"Delminda Silveira", @"Mauro Ramos",@"Governador Irineu Bornhausen",@"Deputado Antônio Edu Vieira",@"lauro linhares", nil];
+    [actionSheet showFromBarButtonItem:sender animated:YES];
 }
 
 - (IBAction)onSearch:(id)sender
@@ -191,5 +193,24 @@
     [alertView show];
 }
 
+
+#pragma mark - UIActionSheetDelegate
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == [actionSheet cancelButtonIndex]) {
+        // User pressed cancel -- abort
+        return;
+    }
+    
+    NSArray *testStreetNames = @[@"Delminda Silveira", @"Mauro Ramos",@"Governador Irineu Bornhausen",@"Deputado Antônio Edu Vieira",@"lauro linhares"];
+    
+    NSString *streetToTest = [testStreetNames objectAtIndex:buttonIndex];
+    NSLog(@"About to test with streetName : %@",streetToTest);
+    
+    
+    [[TransitData sharedInstance] initRoutesDataWith:streetToTest];
+    [self.routesHttpSessionMgr findRoutesByName:streetToTest];
+}
 
 @end

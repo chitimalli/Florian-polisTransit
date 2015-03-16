@@ -8,6 +8,8 @@
 
 #import "TransitMapView.h"
 
+#define METERS_PER_MILE 1609.344
+
 @interface TransitMapView ()
 
 @end
@@ -22,8 +24,24 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    self.title = @"Map search";
+    self.title = @"Pick a street";
     [self.navigationController setToolbarHidden:YES animated:YES];
+}
+
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    CLLocationCoordinate2D zoomLocation;
+    zoomLocation.latitude = -27.6142357;
+    zoomLocation.longitude= -48.4828247;
+    
+    MKCoordinateRegion viewRegion = MKCoordinateRegionMakeWithDistance(zoomLocation, METERS_PER_MILE, METERS_PER_MILE);
+    [self.mapview setRegion:viewRegion animated:NO];
+    
+    UILongPressGestureRecognizer *lpgr  = [[UILongPressGestureRecognizer alloc] initWithTarget:self.mapview action:@selector(handleLongPress:)];
+    lpgr.minimumPressDuration           = 2.0;
+    [self.mapview addGestureRecognizer:lpgr];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -31,14 +49,19 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (void)handleLongPress:(UIGestureRecognizer *)gestureRecognizer
+{
+    if (gestureRecognizer.state != UIGestureRecognizerStateBegan)
+        return;
+    
+    CGPoint touchPoint = [gestureRecognizer locationInView:self.mapview];
+    CLLocationCoordinate2D touchMapCoordinate = [self.mapview convertPoint:touchPoint toCoordinateFromView:self.mapview];
+    
+    MKPointAnnotation *myAnnotation = [[MKPointAnnotation alloc] init];
+    myAnnotation.coordinate         = touchMapCoordinate;//CLLocationCoordinate2DMake(51.49795, -0.174056);
+    myAnnotation.title              = @"Street to go";
+    myAnnotation.subtitle           = @"streets";
+    [self.mapview addAnnotation:myAnnotation];
 }
-*/
 
 @end

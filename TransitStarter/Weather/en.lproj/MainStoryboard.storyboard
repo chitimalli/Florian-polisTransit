@@ -17,13 +17,20 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="google-maps-for-ios-screenshot.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="MtL-wP-47d">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                            </imageView>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" mapType="standard" pitchEnabled="NO" showsBuildings="NO" showsPointsOfInterest="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jdX-Lg-UdG">
+                                <rect key="frame" x="0.0" y="44" width="320" height="524"/>
+                                <connections>
+                                    <outlet property="delegate" destination="Cky-Cf-txn" id="oQB-Ud-ARu"/>
+                                </connections>
+                            </mapView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" id="Kpd-7C-HRg"/>
+                    <nil key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="mapview" destination="jdX-Lg-UdG" id="nHh-uB-BEJ"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bdb-Hs-ZwD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -229,7 +236,6 @@
     </scenes>
     <resources>
         <image name="System-Map-icon.png" width="26" height="26"/>
-        <image name="google-maps-for-ios-screenshot.jpg" width="281" height="482"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>

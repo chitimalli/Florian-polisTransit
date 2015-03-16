@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		8102A7B21AB4F42F00B39473 /* System-Map-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 8102A7B11AB4F42F00B39473 /* System-Map-icon.png */; };
 		8102A7B51AB4F58E00B39473 /* TransitMapView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8102A7B41AB4F58E00B39473 /* TransitMapView.m */; };
-		8102A7B71AB4F6AF00B39473 /* google-maps-for-ios-screenshot.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 8102A7B61AB4F6AF00B39473 /* google-maps-for-ios-screenshot.jpg */; };
 		810F75201AB3AF980092D66E /* RouteDetailsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 810F751F1AB3AF980092D66E /* RouteDetailsView.m */; };
 		8160CE7E1AB3863B00303586 /* RouteModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8160CE7D1AB3863B00303586 /* RouteModel.m */; };
 		8160CE811AB3865D00303586 /* StopModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8160CE801AB3865D00303586 /* StopModel.m */; };
@@ -42,6 +41,7 @@
 		81A24A471AB26CDD00C0A763 /* JSONModel+networking.m in Sources */ = {isa = PBXBuildFile; fileRef = 81A24A3A1AB26CDD00C0A763 /* JSONModel+networking.m */; };
 		81A24A481AB26CDD00C0A763 /* JSONKeyMapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 81A24A3D1AB26CDD00C0A763 /* JSONKeyMapper.m */; };
 		81A24A491AB26CDD00C0A763 /* JSONValueTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 81A24A3F1AB26CDD00C0A763 /* JSONValueTransformer.m */; };
+		81B48CBD1AB689F300A93CC3 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81B48CBC1AB689F300A93CC3 /* MapKit.framework */; };
 		81B99B451AB4A23A00AC3021 /* TransitData.m in Sources */ = {isa = PBXBuildFile; fileRef = 81B99B441AB4A23A00AC3021 /* TransitData.m */; };
 		D233D07A16B400EF005212DE /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D233D07816B400EF005212DE /* InfoPlist.strings */; };
 		D233D07C16B400EF005212DE /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D233D07B16B400EF005212DE /* main.m */; };
@@ -62,7 +62,6 @@
 		8102A7B11AB4F42F00B39473 /* System-Map-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "System-Map-icon.png"; sourceTree = "<group>"; };
 		8102A7B31AB4F58E00B39473 /* TransitMapView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransitMapView.h; sourceTree = "<group>"; };
 		8102A7B41AB4F58E00B39473 /* TransitMapView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransitMapView.m; sourceTree = "<group>"; };
-		8102A7B61AB4F6AF00B39473 /* google-maps-for-ios-screenshot.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "google-maps-for-ios-screenshot.jpg"; sourceTree = "<group>"; };
 		810F751E1AB3AF980092D66E /* RouteDetailsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RouteDetailsView.h; sourceTree = "<group>"; };
 		810F751F1AB3AF980092D66E /* RouteDetailsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RouteDetailsView.m; sourceTree = "<group>"; };
 		8160CE7C1AB3863B00303586 /* RouteModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RouteModel.h; sourceTree = "<group>"; };
@@ -130,6 +129,7 @@
 		81A24A3D1AB26CDD00C0A763 /* JSONKeyMapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONKeyMapper.m; sourceTree = "<group>"; };
 		81A24A3E1AB26CDD00C0A763 /* JSONValueTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONValueTransformer.h; sourceTree = "<group>"; };
 		81A24A3F1AB26CDD00C0A763 /* JSONValueTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONValueTransformer.m; sourceTree = "<group>"; };
+		81B48CBC1AB689F300A93CC3 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		81B99B431AB4A23A00AC3021 /* TransitData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransitData.h; sourceTree = "<group>"; };
 		81B99B441AB4A23A00AC3021 /* TransitData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransitData.m; sourceTree = "<group>"; };
 		D233D06B16B400EF005212DE /* Transit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Transit.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -157,6 +157,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				81B48CBD1AB689F300A93CC3 /* MapKit.framework in Frameworks */,
 				F957DCE4185F35C7008DCB3B /* CoreGraphics.framework in Frameworks */,
 				F957DCE6185F35CC008DCB3B /* CoreLocation.framework in Frameworks */,
 				F957DCE2185F35B8008DCB3B /* Foundation.framework in Frameworks */,
@@ -173,7 +174,6 @@
 		8102A7AE1AB4F31A00B39473 /* Images */ = {
 			isa = PBXGroup;
 			children = (
-				8102A7B61AB4F6AF00B39473 /* google-maps-for-ios-screenshot.jpg */,
 				8102A7B11AB4F42F00B39473 /* System-Map-icon.png */,
 			);
 			name = Images;
@@ -324,6 +324,7 @@
 		D233D06E16B400EF005212DE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				81B48CBC1AB689F300A93CC3 /* MapKit.framework */,
 				F957DCE3185F35C7008DCB3B /* CoreGraphics.framework */,
 				F957DCE5185F35CC008DCB3B /* CoreLocation.framework */,
 				F957DCE0185F35B8008DCB3B /* Foundation.framework */,
@@ -429,7 +430,6 @@
 				D233D07A16B400EF005212DE /* InfoPlist.strings in Resources */,
 				D233D08916B400EF005212DE /* MainStoryboard.storyboard in Resources */,
 				F957DCDE185F27ED008DCB3B /* Images.xcassets in Resources */,
-				8102A7B71AB4F6AF00B39473 /* google-maps-for-ios-screenshot.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
