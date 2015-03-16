@@ -22,7 +22,7 @@
 
 -(void) initRoutesDataWith:(NSString*)searchRouteName
 {
-    //NSLog(@"Tried Street name: %@",searchRouteName);
+    //NSLog(@"Tried Street name: %@",searchRouteName); 
     
     self.searchRouteName = searchRouteName;
     self.routes = nil;

@@ -33,7 +33,7 @@
     [super viewDidAppear:animated];
     
     CLLocationCoordinate2D zoomLocation;
-    zoomLocation.latitude = -27.6142357;
+    zoomLocation.latitude = -27.6142357; 
     zoomLocation.longitude= -48.4828247;
     
     MKCoordinateRegion viewRegion = MKCoordinateRegionMakeWithDistance(zoomLocation, METERS_PER_MILE, METERS_PER_MILE);

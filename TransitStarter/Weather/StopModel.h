@@ -16,6 +16,6 @@
 @property (assign, nonatomic) int id;
 @property (strong, nonatomic) NSString* name;
 @property (strong, nonatomic) NSString* route_id;
-@property (assign, nonatomic) int sequence;
+@property (assign, nonatomic) int sequence; 
 
 @end

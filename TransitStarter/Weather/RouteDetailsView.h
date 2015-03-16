@@ -18,7 +18,7 @@
 @property(weak,nonatomic) IBOutlet UITableView *departuresSunTable;
 
 @property (nonatomic,assign) IBOutlet UILabel *routeStopsText;
-@property (nonatomic,assign) IBOutlet UILabel *routedeparturesText;
+@property (nonatomic,assign) IBOutlet UILabel *routedeparturesText; 
 
 
 @end

@@ -22,7 +22,6 @@
 -(void)findStopsByRouteID:(NSInteger)routeID;
 -(void)findDeparturesByRouteID:(NSInteger)routeID;
 
-
 @end
 
 @protocol RoutesHTTPClientDelegate <NSObject>

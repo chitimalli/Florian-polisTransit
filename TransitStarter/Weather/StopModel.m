@@ -7,6 +7,6 @@
 
 #import "StopModel.h"
 
-@implementation StopModel
+@implementation StopModel 
 
 @end

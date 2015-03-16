@@ -14,7 +14,7 @@
 @property(nonatomic,weak) IBOutlet UIButton    *cancelBtn;
 
 // Actions
-- (IBAction)onSearch:(id)sender;
+- (IBAction)onSearch:(id)sender; 
 
 - (IBAction)clear:(id)sender;
 - (IBAction)quickSearch:(id)sender;

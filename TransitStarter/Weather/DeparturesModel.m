@@ -10,3 +10,4 @@
 @implementation DeparturesModel
 
 @end
+

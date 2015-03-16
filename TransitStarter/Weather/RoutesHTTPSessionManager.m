@@ -20,7 +20,7 @@ static NSString * const AppGluOnlineURLString = @"https://api.appglu.com/v1/quer
     });
     
     return _sharedRoutesHTTPClient;
-    
+
 }
 
 - (instancetype)initWithBaseURL:(NSURL *)url

@@ -13,7 +13,7 @@
 @property (assign, nonatomic) int id;
 @property (assign, nonatomic) NSDate* lastModifiedDate;
 @property (strong, nonatomic) NSString* longName;
-@property (assign, nonatomic) int shortName;
+@property (assign, nonatomic) int shortName; 
 
 
 @end

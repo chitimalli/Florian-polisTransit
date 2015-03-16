@@ -11,7 +11,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    // Override point for customization after application launch.
+    // Override point for customization after application launch. 
     [AFNetworkActivityIndicatorManager sharedManager].enabled = YES;
     return YES;
 }

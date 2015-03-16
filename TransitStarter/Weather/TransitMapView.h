@@ -10,7 +10,7 @@
 #import <MapKit/MapKit.h>
 #import "CoreLocation/CoreLocation.h"
 
-@interface TransitMapView : UIViewController<MKMapViewDelegate>//MKMapViewDelegate
+@interface TransitMapView : UIViewController<MKMapViewDelegate>
 @property(weak,nonatomic) IBOutlet MKMapView *mapview;
 
 @end

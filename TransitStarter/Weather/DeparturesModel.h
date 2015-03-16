@@ -14,7 +14,7 @@
 
 @property (strong, nonatomic) NSString* calendar;
 @property (assign, nonatomic) int id;
-@property (strong, nonatomic) NSString* time;
+@property (strong, nonatomic) NSString* time; 
 
 
 @end

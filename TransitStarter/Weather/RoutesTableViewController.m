@@ -166,7 +166,7 @@
                     
                     [[[TransitData sharedInstance] routes] addObject:routeModel];
                 }
-            }
+            } 
         }else
         {
             NSString *streetTried = [[TransitData sharedInstance] searchRouteName];
