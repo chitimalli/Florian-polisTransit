@@ -1,6 +1,6 @@
-# arctouchtest
-ArcTouchTest
-#This is a ArcTouch test to get REST API calls working on the public transportation system
+# Florian-polisTransit
+Florian-polisTransit
+#This is a Florian-polisTransit example to use  REST API calls working on the public transportation system
 
 The REST APIs listed below require authentication, all the requests must include a HTTP Basic Authentication header. 
 
